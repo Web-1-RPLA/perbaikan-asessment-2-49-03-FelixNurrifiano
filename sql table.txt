@@ -1,0 +1,29 @@
+CREATE TABLE `tamu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) NOT NULL,
+  `no_ktp` varchar(20) NOT NULL,
+  `no_hp` varchar(15) NOT NULL,
+  `alamat` text NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `kamar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomor_kamar` varchar(10) NOT NULL,
+  `tipe_kamar` enum('Single','Double','Suite') NOT NULL,
+  `harga_per_malam` int(11) NOT NULL,
+  `status` enum('Tersedia','Terisi') DEFAULT 'Tersedia',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `reservasi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tamu` int(11) NOT NULL,
+  `id_kamar` int(11) NOT NULL,
+  `tanggal_checkin` date NOT NULL,
+  `tanggal_checkout` date NOT NULL,
+  `status` enum('Aktif','Selesai','Batal') DEFAULT 'Aktif',
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_tamu`) REFERENCES `tamu`(`id`),
+  FOREIGN KEY (`id_kamar`) REFERENCES `kamar`(`id`)
+);
